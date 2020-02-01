@@ -10,7 +10,7 @@
     <input class="textField" name="id" placeholder="身份证号码" value="{{id}}" bindinput = "bindInputId"/>
 
       <!-- 结语 -->
-  <view class="guide" wx:if="{{name !== ''}}">
+  <view class="guide" wx:if="{{name !== '' && queryResult === 0}}">
     <text class="headline">查询结果!</text>
     <text class="p">身份证: {{id}}</text>
     <text class="p">姓名: {{name}}</text>
@@ -18,7 +18,12 @@
     <text class="p">电话: {{phone}}</text>
     <text class="p">地址: {{address}}</text>
     <text class="p">预订数量: {{ordqty}}</text>
+    <text class="p">预订领取日期: {{pckdte}}</text>
     <text class="p">领取数量: {{pckqty}}</text>
+  </view>
+
+  <view class="guide" wx:if="{{queryResult === -1}}">
+    <text class="headline">查询无结果!</text>
   </view>
 
      <view class="btn-area">

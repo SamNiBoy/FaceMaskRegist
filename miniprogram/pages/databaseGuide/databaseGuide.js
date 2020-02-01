@@ -34,47 +34,73 @@ Page({
     var status = validateData(this);
     if (status === 0)
     {
-     const db = wx.cloud.database()
-     db.collection('records').add({
-       data: {
-        sq: this.data.sq[this.data.index],
-        id: this.data.id,
-        name: this.data.name,
-        sex: this.data.sex[this.data.index2],
-        phone: this.data.phone,
-        address: this.data.address,
-        ordqty: this.data.ordqty,
-        pckdte: this.data.pckdte,
-        pckqty: '0'
-       },
-       success: res => {
-    //     // 在返回结果中会包含新创建的记录的 _id
-         this.setData({
-           counterId: res._id,
-           index: 0,
-           id: '',
-           name: '',
-           index2: 0,
-           phone: '',
-           address: '',
-           ordqty: '',
-           pckdte: ''
-         })
-         wx.showToast({
-           title: '预约成功',
-           duration: 3000
-         })
-         console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-       },
-       fail: err => {
-         wx.showToast({
-           icon: 'none',
-           title: '预约失败,请联系管理员',
-           duration: 3000
-         })
-         console.error('[数据库] [新增记录] 失败：', err)
-       }
-     })
+      const db = wx.cloud.database()
+      // 查询当前用户所有的 counters
+      db.collection('records').where({
+        _openid: this.data.openid,
+        id: this.data.id
+      }).get({
+        success: res => {
+          if (res.data.length > 0) {
+            wx.showToast({
+              icon: 'none',
+              title: '该身份证已经预约',
+              duration: 2000
+            })
+          }
+          else {
+            db.collection('records').add({
+              data: {
+                sq: this.data.sq[this.data.index],
+                id: this.data.id,
+                name: this.data.name,
+                sex: this.data.sex[this.data.index2],
+                phone: this.data.phone,
+                address: this.data.address,
+                ordqty: this.data.ordqty,
+                pckdte: this.data.pckdte,
+                pckqty: '0'
+              },
+              success: res => {
+                //     // 在返回结果中会包含新创建的记录的 _id
+                this.setData({
+                  counterId: res._id,
+                  index: 0,
+                  id: '',
+                  name: '',
+                  index2: 0,
+                  phone: '',
+                  address: '',
+                  ordqty: '',
+                  pckdte: ''
+                })
+                wx.showToast({
+                  title: '预约成功',
+                  duration: 3000
+                })
+                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+              },
+              fail: err => {
+                wx.showToast({
+                  icon: 'none',
+                  title: '预约失败,请联系管理员',
+                  duration: 3000
+                })
+                console.error('[数据库] [新增记录] 失败：', err)
+              }
+            })
+          }
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '查询异常,请联系管理员',
+            duration: 2000
+          })
+          console.error('[数据库] [查询记录] 失败：', err)
+        }
+      })
+
     }
   },
 

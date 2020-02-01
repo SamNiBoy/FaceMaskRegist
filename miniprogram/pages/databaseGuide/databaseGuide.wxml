@@ -6,15 +6,15 @@
 
   <!-- 简介 -->
   <view class="guide">
-    <text class="headline">口罩预约登记</text>
+    <text class="headline">口罩预约领取登记</text>
     <template is="picker" data="{{title: '', label: '', index:index, array: sq, id: 1}}"/>
     <input class="textField" name="id" placeholder="身份证号码" value="{{id}}" bindinput = "bindInputId"/>
     <input class="textField" name="name" placeholder="姓名" value="{{name}}" bindinput = "bindInputName"/>
     <template is="picker" data="{{title: '', label: '', index:index2, array: sex, id: 2}}"/>
     <input class="textField" name="phone" placeholder="电话" value="{{phone}}" bindinput = "bindInputPhone"/>
-    <input class="textarea" name="address" auto-height placeholder="地址" maxlength="350" value="{{address}}" bindinput = "bindInputAddress"/>
-    <input class="textField" name="ordqty" placeholder="预约数量" value="{{ordqty}}" bindinput = "bindInputOrdqty"/>
-        <input class="textField" name="pckdte" placeholder="预约领取日期" value="{{pckdte}}" bindinput = "bindInputPckdte"/>
+    <input class="textarea" name="address" auto-height placeholder="地址(或小区名)" maxlength="350" value="{{address}}" bindinput = "bindInputAddress"/>
+    <input class="textField" name="ordqty" placeholder="预约领取数量(个)" value="{{ordqty}}" bindinput = "bindInputOrdqty"/>
+        <input class="textField" name="pckdte" placeholder="预约领取日期(格式:年.月.日)" value="{{pckdte}}" bindinput = "bindInputPckdte"/>
      <view class="btn-area">
         <button class="btn" hover-class="hl" bindtap="onAdd">预约</button>
       </view>

@@ -130,9 +130,12 @@ Page({
         success: res => {
           if (res.data.length > 0) {
             //const db = wx.cloud.database()
+            if (parseInt(res.data[0].ordqty) - parseInt(res.data[0].pckqty) >= parseInt(this.data.pckqty))
+            {
+              var totpckqty = parseInt(res.data[0].pckqty) + parseInt(this.data.pckqty);
             db.collection('records').doc(res.data[0]._id).update({
               data: {
-                pckqty: this.data.pckqty
+                pckqty: totpckqty.toString()
               },
               success: res => {
                 wx.showToast({
@@ -146,6 +149,14 @@ Page({
                   console.error('[数据库] [更新记录] 失败：', err)
               }
             })
+            }
+            else
+            {
+              wx.showToast({
+                title: '领取数超过预订',
+                duration: 3000
+              })
+            }
 
           }
           else {

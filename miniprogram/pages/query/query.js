@@ -14,7 +14,8 @@ Page({
     address: '',
     ordqty: '',
     pckdte: '',
-    pckqty: 0
+    pckqty: '',
+    queryResult: 0
   },
 
   onLoad: function (options) {
@@ -91,8 +92,10 @@ Page({
           phone: res.data[0].phone,
           address: res.data[0].address,
           ordqty: res.data[0].ordqty,
+          pckdte: res.data[0].pckdte,
           pckqty: res.data[0].pckqty
-        })
+        }),
+          this.setData({ queryResult:0})
         }
         else
         {
@@ -100,7 +103,8 @@ Page({
             icon: 'none',
             title: '该身份证没有预约',
             duration: 2000
-          })
+          }),
+            this.setData({ queryResult: -1})
         }
         console.log('[数据库] [查询记录] 成功: ', res)
       },
