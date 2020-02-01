@@ -1,0 +1,17 @@
+<!--pages/databaseGuide/databaseGuide.wxml-->
+<import src="/pages/common/picker.wxml" />
+<view class="container">
+
+  <!-- 快速操作数据库指引 -->
+
+  <!-- 简介 -->
+  <view class="guide">
+    <text class="headline">领取登记</text>
+      <input class="textField" name="id" placeholder="身份证号码" value="{{id}}" bindinput = "bindInputId"/>
+    <input class="textField" name="pckqty" placeholder="领取数量" value="{{pckqty}}" bindinput = "bindInputPckqty"/>
+     <view class="btn-area">
+        <button class="btn" hover-class="hl" bindtap="onConfirm">确认领取</button>
+      </view>
+  </view>
+
+</view>

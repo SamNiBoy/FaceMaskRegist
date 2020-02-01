@@ -29,10 +29,22 @@
 
 
   <!-- 操作数据库 -->
-  <image class="flat-image" src="../../images/main.jpg" mode="Fit"></image>
-  <view class="uploader">
+  <image class="main-image" src="../../images/main.jpg"></image>
+  <view class="btn-container">
     <navigator url="../databaseGuide/databaseGuide" open-type="navigate" class="uploader-text">
-      <text>嘉定区防肺炎口罩预约领取登记</text>
+      <view class="btn-area">
+        <button class="btn" hover-class="hl" formType="submit">预约</button>
+      </view>
+    </navigator>
+        <navigator url="../confirm/confirm" open-type="navigate" class="uploader-text">
+      <view class="btn-area">
+        <button class="btn" hover-class="hl" formType="submit">领取</button>
+      </view>
+    </navigator>
+        <navigator url="../query/query" open-type="navigate" class="uploader-text">
+      <view class="btn-area">
+        <button class="btn" hover-class="hl" formType="submit">查询</button>
+      </view>
     </navigator>
   </view>
 

@@ -154,3 +154,62 @@ page {
   line-height: 36rpx;
   word-break: break-all;
 }
+
+/*!
+ * weui.js v1.1.0 (https://github.com/weui/weui-wxss)
+ * Copyright 2016, wechat ui team
+ * MIT license
+ */
+
+ --root{
+   --displayColor: rgb(26, 221, 36);
+   --editableColor: rgb(221, 26, 179);
+ }
+
+.picker{
+  margin-top: 5rpx;
+  margin-left: 0rpx;
+  margin-right: 0rpx;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color:white;
+}
+.picker_title {
+  padding: 0 0 0 20rpx;
+  width: 100%;
+  font-size: 20px;
+  color:rgb(26, 221, 36);
+    background-color: #EEEEEE;
+}
+
+.picker-cell {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.picker-label {
+  padding: 0 0 0 0rpx;
+  width: 20%;
+  font-size: 30px;
+  color: black;
+}
+
+.picker-input-wrap {
+  padding-left: 150rpx;
+  width: 80%;
+  display: flex;
+  background-color: #FFFFFF;
+}
+
+.picker-input {
+  padding: 0 0 0 0;
+  height: 50rpx;
+  font-size: 14px;
+  color: rgb(221, 26, 179);
+}
+
+

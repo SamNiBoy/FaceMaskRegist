@@ -1,0 +1,55 @@
+/*!
+ * weui.js v1.1.0 (https://github.com/weui/weui-wxss)
+ * Copyright 2016, wechat ui team
+ * MIT license
+ */
+
+ --root{
+   --displayColor: rgb(26, 221, 36);
+   --editableColor: rgb(221, 26, 179);
+ }
+
+.picker{
+  margin-top: 20rpx;
+  margin-left: 5rpx;
+  margin-right: 5rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: rgb(235, 10, 10);
+}
+.picker_title {
+  padding: 0 0 0 0rpx;
+  width: 100%;
+  font-size: 20px;
+  color:rgb(26, 221, 36);
+    background-color: #EEEEEE;
+}
+
+.picker-cell {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.picker-label {
+  padding: 0 0 0 0rpx;
+  font-size: 14px;
+  color:rgb(26, 221, 36);
+}
+
+.picker-input-wrap {
+  width: 100%;
+  display: flex;
+  background-color: red;
+}
+
+.picker-input {
+  padding: 0 0 0 0;
+  height: 32rpx;
+  font-size: 14px;
+  color: rgb(221, 26, 179);
+  align-content: right;
+}
+
+

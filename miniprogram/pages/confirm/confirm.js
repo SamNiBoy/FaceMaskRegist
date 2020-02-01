@@ -5,7 +5,7 @@ const app = getApp()
 Page({
 
   data: {
-    counterId: '',
+    docId: '',
     openid: '',
     count: null,
     queryResult: '',
@@ -45,7 +45,7 @@ Page({
         address: this.data.address,
         ordqty: this.data.ordqty,
         pckdte: this.data.pckdte,
-        pckqty: '0'
+        pckqty: 0
        },
        success: res => {
     //     // 在返回结果中会包含新创建的记录的 _id
@@ -78,64 +78,95 @@ Page({
     }
   },
 
-  onQuery: function() {
+  onQuery: function () {
     const db = wx.cloud.database()
     // 查询当前用户所有的 counters
     db.collection('records').where({
-      _openid: this.data.openid
+      _openid: this.data.openid,
+      id: this.data.id
     }).get({
       success: res => {
-        this.setData({
-          queryResult: JSON.stringify(res.data, null, 2)
-        })
+        if (res.data.length > 0) {
+          this.setData({
+            //queryResult: JSON.stringify(res.data, null, 2)
+            id: res.data[0].id,
+            name: res.data[0].name,
+            sex: res.data[0].sex,
+            phone: res.data[0].phone,
+            address: res.data[0].address,
+            ordqty: res.data[0].ordqty,
+            pckqty: res.data[0].pckqty
+          })
+        }
+        else {
+          wx.showToast({
+            icon: 'none',
+            title: '该身份证没有预约',
+            duration: 2000
+          })
+        }
         console.log('[数据库] [查询记录] 成功: ', res)
       },
       fail: err => {
         wx.showToast({
           icon: 'none',
-          title: '查询记录失败'
+          title: '查询异常,请联系管理员',
+          duration: 2000
         })
         console.error('[数据库] [查询记录] 失败：', err)
       }
     })
   },
 
-  onCounterInc: function() {
-    // const db = wx.cloud.database()
-    // const newCount = this.data.count + 1
-    // db.collection('counters').doc(this.data.counterId).update({
-    //   data: {
-    //     count: newCount
-    //   },
-    //   success: res => {
-    //     this.setData({
-    //       count: newCount
-    //     })
-    //   },
-    //   fail: err => {
-    //     icon: 'none',
-    //     console.error('[数据库] [更新记录] 失败：', err)
-    //   }
-    // })
-  },
+  onConfirm: function() {
+    if (validateData(this) === 0)
+    {
+      const db = wx.cloud.database()
+      // 查询当前用户所有的 counters
+      db.collection('records').where({
+        _openid: this.data.openid,
+        id: this.data.id
+      }).get({
+        success: res => {
+          if (res.data.length > 0) {
+            //const db = wx.cloud.database()
+            db.collection('records').doc(res.data[0]._id).update({
+              data: {
+                pckqty: this.data.pckqty
+              },
+              success: res => {
+                wx.showToast({
+                  title: '领取确认成功',
+                  duration: 3000
+                }),
+                  this.setData({ id: '', pckqty: '' })
+              },
+              fail: err => {
+                icon: 'none',
+                  console.error('[数据库] [更新记录] 失败：', err)
+              }
+            })
 
-  onCounterDec: function() {
-    // const db = wx.cloud.database()
-    // const newCount = this.data.count - 1
-    // db.collection('counters').doc(this.data.counterId).update({
-    //   data: {
-    //     count: newCount
-    //   },
-    //   success: res => {
-    //     this.setData({
-    //       count: newCount
-    //     })
-    //   },
-    //   fail: err => {
-    //     icon: 'none',
-    //     console.error('[数据库] [更新记录] 失败：', err)
-    //   }
-    // })
+          }
+          else {
+            wx.showToast({
+              icon: 'none',
+              title: '该身份证没有预约',
+              duration: 2000
+            })
+          }
+          console.log('[数据库] [查询记录] 成功: ', res)
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '查询异常,请联系管理员',
+            duration: 2000
+          })
+          console.error('[数据库] [查询记录] 失败：', err)
+        }
+      })
+    }
   },
 
   onRemove: function() {
@@ -220,63 +251,20 @@ Page({
       })
     }
   },
-  bindPickerChange(e) {
-    //console.log('picker发送选择改变，携带值为', e.detail.value);
-    if (e.target.id === '1')
-    {
-    this.setData({
-      index: e.detail.value
-    });
-    }
-    else if (e.target.id === '2')
-    {
-      this.setData({
-        index2: e.detail.value
-      });
-    }
-  },
   bindInputId(e) {
     this.setData({
       id: e.detail.value
     })
   },
-  bindInputName(e) {
+  bindInputPckqty(e) {
     this.setData({
-      name: e.detail.value
-    })
-  },
-  bindInputPhone(e) {
-    this.setData({
-      phone: e.detail.value
-    })
-  },
-  bindInputAddress(e) {
-    this.setData({
-      address: e.detail.value
-    })
-  },
-  bindInputOrdqty(e) {
-    this.setData({
-      ordqty: e.detail.value
-    })
-  },
-  bindInputPckdte(e) {
-    this.setData({
-      pckdte: e.detail.value
+      pckqty: e.detail.value
     })
   }
 
 });
 
 function validateData(that) {
-  if (that.data.index === 0) {
-    wx.showToast({
-      title: '请选择社区',
-      icon: 'fail',
-      duration: 2000
-    });
-    return 1;
-  }
   if (that.data.id === '') {
     wx.showToast({
       title: '请输入身份证',
@@ -285,49 +273,10 @@ function validateData(that) {
     });
     return 1;
   }
-  if (that.data.name === '') {
+
+  if (that.data.pckqty === '' || that.data.pckqty === '0') {
     wx.showToast({
-      title: '请输入姓名',
-      icon: 'fail',
-      duration: 2000
-    });
-    return 1;
-  }
-  if (that.data.index2 === 0) {
-    wx.showToast({
-      title: '请选择性别',
-      icon: 'fail',
-      duration: 2000
-    });
-    return 1;
-  }
-  if (that.data.phone === '') {
-    wx.showToast({
-      title: '请输入电话',
-      icon: 'fail',
-      duration: 2000
-    });
-    return 1;
-  }
-  if (that.data.address === '') {
-    wx.showToast({
-      title: '请输入地址',
-      icon: 'fail',
-      duration: 2000
-    });
-    return 1;
-  }
-  if (that.data.ordqty === '' || that.data.ordqty === '0') {
-    wx.showToast({
-      title: '请输入预订数量',
-      icon: 'fail',
-      duration: 2000
-    });
-    return 1;
-  }
-  if (that.data.pckdte === '') {
-    wx.showToast({
-      title: '请输入领取日期',
+      title: '请输入领取数量',
       icon: 'fail',
       duration: 2000
     });

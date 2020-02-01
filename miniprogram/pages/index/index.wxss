@@ -151,3 +151,28 @@ page {
   line-height: 36rpx;
   word-break: break-all;
 }
+.main-image{
+  width: 750rpx;
+  height: 950rpx;
+}
+
+.btn-container {
+  margin-top: 50rpx;
+  width: 95%;
+  padding: 0rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 32rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+
+.btn-area{
+  margin-top: 20rpx;
+  width: 100%;
+  background-color:rgba(26, 221, 36, 0.74);
+}
+.btn {
+  color: #FFFFFF;
+}
